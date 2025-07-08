@@ -11,4 +11,4 @@ COPY . /app
 RUN ./mvnw clean install
 
 # Run the application
-CMD ["java", "-jar", "target/clinic-management-system.jar"]
+CMD sh -c "java -jar $(ls target/*.jar | head -n 1)"
