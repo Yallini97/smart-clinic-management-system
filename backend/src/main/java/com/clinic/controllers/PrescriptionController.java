@@ -3,7 +3,6 @@ package com.clinic.controllers;
 import com.clinic.models.Prescription;
 import com.clinic.repo.PrescriptionRepository;
 import com.clinic.services.TokenService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,24 +20,24 @@ public class PrescriptionController {
     @Autowired
     private TokenService tokenService;
 
-    // ✅ Save prescription with real JWT validation
+    // Save a prescription (requires valid token)
     @PostMapping("/{patientId}")
     public ResponseEntity<String> savePrescription(
             @RequestHeader("Authorization") String token,
             @PathVariable Long patientId,
             @Valid @RequestBody Prescription prescription) {
 
-        // ✅ Remove "Bearer " prefix if present
-        if (token.startsWith("Bearer ")) {
+        // Remove "Bearer " prefix if present
+        if (token != null && token.startsWith("Bearer ")) {
             token = token.substring(7);
         }
 
-        // ✅ Validate the token using TokenService
+        // Validate token
         if (!tokenService.validateToken(token)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired token");
         }
 
-        // ✅ Set patient ID and save prescription
+        // Save prescription
         prescription.setPatientId(patientId);
         prescriptionRepository.save(prescription);
 
