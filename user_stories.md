@@ -55,4 +55,22 @@
 
 ## User Story 1: Book Appointment
 **As a** patient,  
-**I wa**
+**I want to** book an appointment with a doctor,  
+**so that** I can get medical consultation.
+
+- **Acceptance Criteria:**
+  - Patient selects doctor and preferred time.
+  - Appointment must be confirmed only if the slot is available.
+- **Priority:** High  
+- **Status:** To Do
+
+## User Story 2: View Prescription
+**As a** patient,  
+**I want to** view my past prescriptions,  
+**so that** I can track my treatment history.
+
+- **Acceptance Criteria:**
+  - Prescriptions must be linked to completed appointments.
+  - Patient can only view their own prescriptions.
+- **Priority:** Medium  
+- **Status:** To Do
