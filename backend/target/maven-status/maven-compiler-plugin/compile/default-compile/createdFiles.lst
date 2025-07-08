@@ -1,0 +1,16 @@
+com\clinic\models\Appointment.class
+com\clinic\models\Doctor.class
+com\clinic\repo\AppointmentRepository.class
+com\clinic\repo\DoctorRepository.class
+com\clinic\services\AppointmentService.class
+com\clinic\controllers\AppointmentController.class
+com\clinic\services\DoctorService.class
+com\clinic\models\Prescription.class
+com\clinic\controllers\PrescriptionController.class
+com\clinic\repo\PrescriptionRepository.class
+com\clinic\controllers\DoctorController.class
+com\clinic\models\Patient.class
+com\clinic\SmartClinicManagementSystemApplication.class
+com\clinic\controllers\PatientController.class
+com\clinic\services\TokenService.class
+com\clinic\repo\PatientRepository.class

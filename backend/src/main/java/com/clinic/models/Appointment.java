@@ -1,26 +1,30 @@
 package com.clinic.models;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "appointments")
 public class Appointment {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private int doctorId;
     private int patientId;
     private LocalDateTime appointmentTime;
     private String status;
 
-    // Constructors
     public Appointment() {}
 
-    public Appointment(int id, int doctorId, int patientId, LocalDateTime appointmentTime, String status) {
-        this.id = id;
+    public Appointment(int doctorId, int patientId, LocalDateTime appointmentTime, String status) {
         this.doctorId = doctorId;
         this.patientId = patientId;
         this.appointmentTime = appointmentTime;
         this.status = status;
     }
 
-    // Getters and Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 

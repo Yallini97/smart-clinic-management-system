@@ -1,0 +1,16 @@
+C:\Users\Dell XPS 13 PLUS\Documents\Coding Practice\smart-clinic-management-system\backend\src\main\java\com\clinic\controllers\PrescriptionController.java
+C:\Users\Dell XPS 13 PLUS\Documents\Coding Practice\smart-clinic-management-system\backend\src\main\java\com\clinic\models\Prescription.java
+C:\Users\Dell XPS 13 PLUS\Documents\Coding Practice\smart-clinic-management-system\backend\src\main\java\com\clinic\repo\PrescriptionRepository.java
+C:\Users\Dell XPS 13 PLUS\Documents\Coding Practice\smart-clinic-management-system\backend\src\main\java\com\clinic\services\DoctorService.java
+C:\Users\Dell XPS 13 PLUS\Documents\Coding Practice\smart-clinic-management-system\backend\src\main\java\com\clinic\services\TokenService.java
+C:\Users\Dell XPS 13 PLUS\Documents\Coding Practice\smart-clinic-management-system\backend\src\main\java\com\clinic\models\Patient.java
+C:\Users\Dell XPS 13 PLUS\Documents\Coding Practice\smart-clinic-management-system\backend\src\main\java\com\clinic\repo\DoctorRepository.java
+C:\Users\Dell XPS 13 PLUS\Documents\Coding Practice\smart-clinic-management-system\backend\src\main\java\com\clinic\repo\AppointmentRepository.java
+C:\Users\Dell XPS 13 PLUS\Documents\Coding Practice\smart-clinic-management-system\backend\src\main\java\com\clinic\repo\PatientRepository.java
+C:\Users\Dell XPS 13 PLUS\Documents\Coding Practice\smart-clinic-management-system\backend\src\main\java\com\clinic\SmartClinicManagementSystemApplication.java
+C:\Users\Dell XPS 13 PLUS\Documents\Coding Practice\smart-clinic-management-system\backend\src\main\java\com\clinic\controllers\DoctorController.java
+C:\Users\Dell XPS 13 PLUS\Documents\Coding Practice\smart-clinic-management-system\backend\src\main\java\com\clinic\services\AppointmentService.java
+C:\Users\Dell XPS 13 PLUS\Documents\Coding Practice\smart-clinic-management-system\backend\src\main\java\com\clinic\controllers\AppointmentController.java
+C:\Users\Dell XPS 13 PLUS\Documents\Coding Practice\smart-clinic-management-system\backend\src\main\java\com\clinic\models\Doctor.java
+C:\Users\Dell XPS 13 PLUS\Documents\Coding Practice\smart-clinic-management-system\backend\src\main\java\com\clinic\models\Appointment.java
+C:\Users\Dell XPS 13 PLUS\Documents\Coding Practice\smart-clinic-management-system\backend\src\main\java\com\clinic\controllers\PatientController.java

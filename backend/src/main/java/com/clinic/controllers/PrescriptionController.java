@@ -1,33 +1,57 @@
 package com.clinic.controllers;
 
 import com.clinic.models.Prescription;
+import com.clinic.repo.PrescriptionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/prescriptions")
 public class PrescriptionController {
 
-    private List<Prescription> prescriptionList = new ArrayList<>();
+    @Autowired
+    private PrescriptionRepository prescriptionRepository;
 
+    // Create a new prescription
     @PostMapping
-    public String createPrescription(@RequestBody Prescription prescription) {
-        prescriptionList.add(prescription);
-        return "Prescription added successfully";
+    public Prescription createPrescription(@RequestBody Prescription prescription) {
+        return prescriptionRepository.save(prescription);
     }
 
+    // Get all prescriptions
     @GetMapping
     public List<Prescription> getAllPrescriptions() {
-        return prescriptionList;
+        return prescriptionRepository.findAll();
     }
 
+    // Get prescription by ID
     @GetMapping("/{id}")
-    public Prescription getPrescriptionById(@PathVariable int id) {
-        return prescriptionList.stream()
-                .filter(p -> p.getId() == id)
-                .findFirst()
-                .orElse(null);
+    public Optional<Prescription> getPrescriptionById(@PathVariable Long id) {
+        return prescriptionRepository.findById(id);
+    }
+
+    // Update prescription
+    @PutMapping("/{id}")
+    public Prescription updatePrescription(@PathVariable Long id, @RequestBody Prescription updatedPrescription) {
+        return prescriptionRepository.findById(id).map(prescription -> {
+            prescription.setMedicationName(updatedPrescription.getMedicationName());
+            prescription.setDosage(updatedPrescription.getDosage());
+            prescription.setFrequency(updatedPrescription.getFrequency());
+            prescription.setNotes(updatedPrescription.getNotes());
+            return prescriptionRepository.save(prescription);
+        }).orElseGet(() -> {
+            updatedPrescription.setId(id);
+            return prescriptionRepository.save(updatedPrescription);
+        });
+    }
+
+    // Delete prescription
+    @DeleteMapping("/{id}")
+    public String deletePrescription(@PathVariable Long id) {
+        prescriptionRepository.deleteById(id);
+        return "Prescription deleted with ID: " + id;
     }
 }
