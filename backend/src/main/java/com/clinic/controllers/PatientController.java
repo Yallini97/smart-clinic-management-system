@@ -1,58 +1,52 @@
 package com.clinic.controllers;
 
 import com.clinic.models.Patient;
-import com.clinic.repo.PatientRepository;
+import com.clinic.services.PatientService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/patients")
 public class PatientController {
 
     @Autowired
-    private PatientRepository patientRepository;
+    private PatientService patientService;
 
-    // Create a new patient
+    // ✅ Create patient
     @PostMapping
-    public Patient addPatient(@RequestBody Patient patient) {
-        return patientRepository.save(patient);
+    public ResponseEntity<Patient> addPatient(@Valid @RequestBody Patient patient) {
+        Patient saved = patientService.savePatient(patient);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
-    // Get all patients
+    // ✅ Get all patients
     @GetMapping
     public List<Patient> getAllPatients() {
-        return patientRepository.findAll();
+        return patientService.getAllPatients();
     }
 
-    // Get patient by ID
+    // ✅ Get patient by ID
     @GetMapping("/{id}")
-    public Optional<Patient> getPatientById(@PathVariable Long id) {
-        return patientRepository.findById(id);
+    public ResponseEntity<Patient> getPatientById(@PathVariable Long id) {
+        return patientService.getPatientById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    // Update patient
-    @PutMapping("/{id}")
-    public Patient updatePatient(@PathVariable Long id, @RequestBody Patient updatedPatient) {
-        return patientRepository.findById(id).map(patient -> {
-            patient.setFullName(updatedPatient.getFullName());
-            patient.setAge(updatedPatient.getAge());
-            patient.setGender(updatedPatient.getGender());
-            patient.setPhoneNumber(updatedPatient.getPhoneNumber());
-            patient.setEmail(updatedPatient.getEmail());
-            return patientRepository.save(patient);
-        }).orElseGet(() -> {
-            updatedPatient.setId(id);  // ⚠️ Make sure setId() exists in Patient.java
-            return patientRepository.save(updatedPatient);
-        });
-    }
-
-    // Delete patient
+    // ✅ Delete patient
     @DeleteMapping("/{id}")
-    public String deletePatient(@PathVariable Long id) {
-        patientRepository.deleteById(id);
-        return "Patient deleted with ID: " + id;
+    public ResponseEntity<Void> deletePatient(@PathVariable Long id) {
+        patientService.deletePatient(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    // ✅ Search patients by doctor ID
+    @GetMapping("/by-doctor/{doctorId}")
+    public List<Patient> getPatientsByDoctor(@PathVariable Long doctorId) {
+        return patientService.getPatientsByDoctorId(doctorId);
     }
 }
