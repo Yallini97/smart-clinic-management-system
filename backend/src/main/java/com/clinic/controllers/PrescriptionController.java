@@ -1,39 +1,47 @@
 package com.clinic.controllers;
 
 import com.clinic.models.Prescription;
-import com.clinic.services.PrescriptionService;
-import jakarta.validation.Valid;
+import com.clinic.repo.PrescriptionRepository;
+import com.clinic.services.TokenService;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/prescriptions")
 public class PrescriptionController {
 
     @Autowired
-    private PrescriptionService prescriptionService;
+    private PrescriptionRepository prescriptionRepository;
 
-    // ✅ Create prescription with token + validation
-    @PostMapping
-    public ResponseEntity<Prescription> createPrescription(
+    @Autowired
+    private TokenService tokenService;
+
+    // ✅ Save prescription with real JWT validation
+    @PostMapping("/{patientId}")
+    public ResponseEntity<String> savePrescription(
             @RequestHeader("Authorization") String token,
-            @Valid @RequestBody Prescription prescription
-    ) {
-        // Dummy token check
-        if (!token.contains("ROLE_DOCTOR")) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            @PathVariable Long patientId,
+            @Valid @RequestBody Prescription prescription) {
+
+        // ✅ Remove "Bearer " prefix if present
+        if (token.startsWith("Bearer ")) {
+            token = token.substring(7);
         }
 
-        Prescription saved = prescriptionService.savePrescription(prescription);
-        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
-    }
+        // ✅ Validate the token using TokenService
+        if (!tokenService.validateToken(token)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired token");
+        }
 
-    // Optional: Get all prescriptions
-    @GetMapping
-    public List<Prescription> getAllPrescriptions() {
-        return prescriptionService.getAllPrescriptions();
+        // ✅ Set patient ID and save prescription
+        prescription.setPatientId(patientId);
+        prescriptionRepository.save(prescription);
+
+        return ResponseEntity.ok("Prescription saved successfully");
     }
 }
