@@ -8,5 +8,7 @@ import java.util.List;
 
 @Repository
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
+
+    // ✅ Filter doctors by specialization and availability
     List<Doctor> findBySpecializationAndAvailability(String specialization, boolean availability);
 }
